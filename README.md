@@ -3,6 +3,33 @@ IncludeDataBindingBug
 
 DataBinding fails to bind an included layout when this layout is added to an "hidden" viewgroup.
 
+```
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+    </data>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MaterialCardViewActivity">
+
+        <!-- replace this with CardView for a working version -->
+        <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <include android:id="@+id/form"
+                     android:layout_width="match_parent" android:layout_height="match_parent"
+                     app:name="@{`MaterialCardView`}"
+                     layout="@layout/included_form"/>
+        </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
+</layout>
+
+```
+
 Starting with "com.google.android.material:material:1.1.0-alpha01", `MaterialCardView` adds its children 
 to a "hidden" `contentLayout` instead of adding them to the MaterialCardView itself.
 This behavior is reproduced in `CustomViewGroup` class.
